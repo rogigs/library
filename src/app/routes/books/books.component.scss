@@ -3,6 +3,18 @@
 }
 
 .img-content {
-  width: 100px;
-  height: 100px;
+  max-height: 150px;
+  background-size: cover;
+}
+
+.header-form {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
 }

@@ -35,4 +35,6 @@ export class BooksComponent implements OnInit {
   log(state: any) {
     console.log(state);
   }
+
+  onSubmit() {}
 }

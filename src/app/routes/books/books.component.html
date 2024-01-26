@@ -1,5 +1,16 @@
+<header class="header-form">
+  <mat-form-field appearance="fill">
+    <mat-label>Procurar livro...</mat-label>
+    <input matInput placeholder="Placeholder" />
+    <mat-icon matSuffix>search</mat-icon>
+    <mat-hint></mat-hint>
+  </mat-form-field>
+  <button mat-fab extended color="">
+    <mat-icon>add</mat-icon>
+    Adicionar
+  </button>
+</header>
 @if (books) { @for (book of books.data; track book.id) {
-
 <mat-card class="card">
   <mat-card-header>
     <mat-card-title-group>
@@ -18,12 +29,12 @@
     {{ book.description }}
   </mat-card-content>
   <mat-card-footer>
-    <mat-card-actions>
-      <button mat-fab extended color="warning">
+    <mat-card-actions class="actions">
+      <button mat-fab extended color="warn">
         <mat-icon>edit</mat-icon>
         Editar
       </button>
-      <button mat-fab extended color="error">
+      <button mat-fab extended color="accent">
         <mat-icon>delete</mat-icon>
         Deletar
       </button>
