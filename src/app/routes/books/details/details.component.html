@@ -14,7 +14,12 @@
       <mat-icon>arrow_back</mat-icon>
       Voltar
     </button>
-    <button mat-flat-button extended color="accent" (click)="goToForm()">
+    <button
+      mat-flat-button
+      extended
+      color="accent"
+      (click)="goToForm(details.data.id)"
+    >
       <mat-icon>edit</mat-icon>
       Editar
     </button>

@@ -42,11 +42,13 @@ export class BooksComponent implements OnInit {
 
   onSubmit() {}
 
-  goToForm() {
-    this.router.navigate(['/books/form']);
+  goToForm(id?: string): void {
+    this.router.navigate(['/books/form'], {
+      queryParams: id ? { id } : {},
+    });
   }
 
-  goToDetails() {
-    this.router.navigate(['/books/details']);
+  goToDetails(id: string): void {
+    this.router.navigate([`/books/details/${id}`]);
   }
 }

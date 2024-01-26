@@ -32,7 +32,12 @@
   </mat-card-content>
   <mat-card-footer>
     <mat-card-actions class="actions">
-      <button mat-flat-button extended color="accent" (click)="goToForm()">
+      <button
+        mat-flat-button
+        extended
+        color="accent"
+        (click)="goToForm(book.id)"
+      >
         <mat-icon>edit</mat-icon>
         Editar
       </button>
@@ -44,7 +49,7 @@
         mat-stroked-button
         extended
         color="primary"
-        (click)="goToDetails()"
+        (click)="goToDetails(book.id)"
       >
         <mat-icon>visibility</mat-icon>
         Ver mais

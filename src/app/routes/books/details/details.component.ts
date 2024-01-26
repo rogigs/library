@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppMaterialModule } from '../../../shared/app-material.module';
 
 @Component({
@@ -10,7 +10,7 @@ import { AppMaterialModule } from '../../../shared/app-material.module';
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit {
   details = {
     status: 200,
     data: {
@@ -34,13 +34,25 @@ export class DetailsComponent {
     },
   };
 
-  constructor(private location: Location, private router: Router) {}
+  constructor(
+    private location: Location,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe((params) => {
+      console.log(params.get('id'));
+    });
+  }
 
   goBackToPrevPage(): void {
     this.location.back();
   }
 
-  goToForm(): void {
-    this.router.navigate(['/books/form']);
+  goToForm(id: string): void {
+    this.router.navigate(['/books/form'], {
+      queryParams: { id },
+    });
   }
 }
