@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppMaterialModule } from '../../../shared/app-material.module';
 
 @Component({
@@ -33,9 +34,13 @@ export class DetailsComponent {
     },
   };
 
-  constructor(private location: Location) {}
+  constructor(private location: Location, private router: Router) {}
 
   goBackToPrevPage(): void {
     this.location.back();
+  }
+
+  goToForm(): void {
+    this.router.navigate(['/books/form']);
   }
 }
