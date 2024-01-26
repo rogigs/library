@@ -34,15 +34,40 @@
     <p>{{ details.data.description }}</p>
     <mat-divider></mat-divider>
     <h2>Informações do livro</h2>
-    <ul>
-      <li>Id do livro: {{ details.data.id }}</li>
-      <li>Autor: {{ details.data.author }}</li>
-      <li>Editora: {{ details.data.publisher }}</li>
-      <li>Ano: {{ details.data.year }}</li>
-      <li>Criado por: {{ details.data.createdByUser }}</li>
-      <li>Atualizado em: {{ details.data.updateDate }}</li>
-      <li>Atualizado por: {{ details.data.updateByUser }}</li>
-      <li>Ativo: {{ details.data.active }}</li>
-    </ul>
+    <mat-list>
+      <mat-list-item>
+        <span matListItemTitle>Id do livro</span>
+        <span mat-line>{{ details.data.id }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Autor:</span>
+
+        <span mat-line>{{ details.data.author }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Editora:</span>
+        <span mat-line>{{ details.data.publisher }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Ano:</span>
+        <span mat-line>{{ details.data.year }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Criado por: </span>
+        <span mat-line>{{ details.data.createdByUser }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Atualizado em:</span>
+        <span mat-line>Atualizado em: {{ details.data.updateDate }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Atualizado por:</span>
+        <span mat-line>{{ details.data.updateByUser }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Ativo:</span>
+        <span mat-line>{{ details.data.active }}</span>
+      </mat-list-item>
+    </mat-list>
   </div>
 </section>
