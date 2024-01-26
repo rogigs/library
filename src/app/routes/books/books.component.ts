@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
+import { AppMaterialModule } from '../../shared/app-material.module';
 
 @Component({
   selector: 'app-books',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatIconModule],
+  imports: [AppMaterialModule],
   templateUrl: './books.component.html',
   styleUrl: './books.component.scss',
 })
