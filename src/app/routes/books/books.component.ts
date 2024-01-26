@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppMaterialModule } from '../../shared/app-material.module';
 
 @Component({
@@ -10,6 +11,8 @@ import { AppMaterialModule } from '../../shared/app-material.module';
 })
 export class BooksComponent implements OnInit {
   books: any;
+
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.books = {
@@ -37,4 +40,8 @@ export class BooksComponent implements OnInit {
   }
 
   onSubmit() {}
+
+  goToForm() {
+    this.router.navigate(['/books/form']);
+  }
 }

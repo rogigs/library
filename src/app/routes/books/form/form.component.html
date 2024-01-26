@@ -1,0 +1,65 @@
+<form class="example-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <mat-form-field class="example-full-width">
+    <mat-label>Id</mat-label>
+    <input matInput value="Google" formControlName="id" />
+    <!-- TODO: disabled button -->
+  </mat-form-field>
+
+  <table
+    class="example-full-width"
+    aria-describedby="table-form-images"
+    formGroupName="img"
+  >
+    <th colspan="2" align="left">Imagem</th>
+    <tr>
+      <td>
+        <mat-form-field class="example-full-width">
+          <mat-label>Source</mat-label>
+          <input matInput formControlName="src" />
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="example-full-width">
+          <mat-label>Alt</mat-label>
+          <input matInput formControlName="alt" />
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Nome</mat-label>
+    <input matInput value="3217dsaidsa" formControlName="name" />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Autor</mat-label>
+    <input matInput value="3217dsaidsa" formControlName="author" />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Editora</mat-label>
+    <input matInput value="3217dsaidsa" formControlName="publisher" />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Ano</mat-label>
+    <input matInput maxlength="4" value="3217dsaidsa" formControlName="year" />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Idioma</mat-label>
+    <mat-select formControlName="language">
+      @for (language of languages; track language) {
+      <mat-option [value]="language.value">{{ language.viewValue }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Descrição</mat-label>
+    <textarea matInput maxlength="500" formControlName="description"></textarea>
+  </mat-form-field>
+  <div class="wrapper-button">
+    <button mat-fab extended color="primary" type="submit">
+      <mat-icon>send</mat-icon>
+      Cadastrar
+    </button>
+  </div>
+</form>

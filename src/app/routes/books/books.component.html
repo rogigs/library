@@ -1,11 +1,11 @@
 <header class="header-form">
   <mat-form-field appearance="fill">
     <mat-label>Procurar livro...</mat-label>
-    <input matInput placeholder="Placeholder" />
+    <input matInput />
     <mat-icon matSuffix>search</mat-icon>
     <mat-hint></mat-hint>
   </mat-form-field>
-  <button mat-fab extended color="">
+  <button mat-fab extended color="" (click)="goToForm()">
     <mat-icon>add</mat-icon>
     Adicionar
   </button>

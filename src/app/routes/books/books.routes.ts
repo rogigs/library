@@ -1,8 +1,9 @@
 import { Routes } from '@angular/router';
 
 import { BooksComponent } from './books.component';
+import { FormComponent } from './form/form.component';
 
 export const BOOKS_ROUTES: Routes = [
   { path: '', component: BooksComponent },
-  //   { path: 'my-words', component: MyWordsComponent },
+  { path: 'form', component: FormComponent },
 ];

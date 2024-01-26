@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTreeModule } from '@angular/material/tree';
 
 @NgModule({
@@ -20,6 +21,7 @@ import { MatTreeModule } from '@angular/material/tree';
     FormsModule,
     MatListModule,
     MatDividerModule,
+    MatSelectModule,
   ],
 })
 export class AppMaterialModule {}
