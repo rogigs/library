@@ -26,7 +26,7 @@ export class FormComponent {
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
-      id: '',
+      id: { value: '', disabled: true },
       name: '',
       author: '',
       publisher: '',
@@ -34,7 +34,7 @@ export class FormComponent {
       description: '',
       language: '',
       img: this.formBuilder.group({
-        src: '', // Defina o valor inicial aqui
+        src: '',
         alt: '',
       }),
     });

@@ -21,11 +21,13 @@
         alt="{{ book.img.alt }}"
       />
       <mat-card-title>{{ book.name }}</mat-card-title>
-      <mat-card-subtitle>Small</mat-card-subtitle>
+      <mat-card-subtitle
+        >{{ book.author }} - {{ book.publisher }}</mat-card-subtitle
+      >
     </mat-card-title-group>
   </mat-card-header>
 
-  <mat-card-content>
+  <mat-card-content class="description">
     {{ book.description }}
   </mat-card-content>
   <mat-card-footer>

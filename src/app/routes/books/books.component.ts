@@ -23,13 +23,14 @@ export class BooksComponent implements OnInit {
           name: 'ANGULAR',
           img: {
             src: 'https://m.media-amazon.com/images/I/51OucWzOf9L.jpg',
-            alt: 132,
+            alt: 'Capa do livro Angular',
           },
           publisher: 'OReilly',
-          autor: 'Shyam',
+          author: 'Shyam',
           year: '',
           language: 'português',
-          description: 'dsbadusadasdas',
+          description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         },
       ],
     };

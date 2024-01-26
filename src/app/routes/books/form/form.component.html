@@ -1,7 +1,7 @@
 <form class="example-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
   <mat-form-field class="example-full-width">
     <mat-label>Id</mat-label>
-    <input matInput value="Google" formControlName="id" />
+    <input matInput formControlName="id" />
     <!-- TODO: disabled button -->
   </mat-form-field>
 
@@ -10,21 +10,25 @@
     aria-describedby="table-form-images"
     formGroupName="img"
   >
-    <th colspan="2" align="left">Imagem</th>
-    <tr>
-      <td>
-        <mat-form-field class="example-full-width">
-          <mat-label>Source</mat-label>
-          <input matInput formControlName="src" />
-        </mat-form-field>
-      </td>
-      <td>
-        <mat-form-field class="example-full-width">
-          <mat-label>Alt</mat-label>
-          <input matInput formControlName="alt" />
-        </mat-form-field>
-      </td>
-    </tr>
+    <thead>
+      <th class="align-left" colspan="2">Imagem</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width first-column">
+            <mat-label>Source</mat-label>
+            <input matInput formControlName="src" />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Alt</mat-label>
+            <input matInput formControlName="alt" />
+          </mat-form-field>
+        </td>
+      </tr>
+    </tbody>
   </table>
 
   <mat-form-field class="example-full-width">
