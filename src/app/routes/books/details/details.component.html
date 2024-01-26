@@ -1,0 +1,43 @@
+<section class="wrapper-section">
+  <div class="wrapper-book">
+    <img
+      class="image"
+      src="{{ details.data.img.src }}"
+      alt="{{ details.data.img.alt }}"
+    />
+    <button
+      mat-stroked-button
+      extended
+      color="primary"
+      (click)="goBackToPrevPage()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      Voltar
+    </button>
+    <button mat-flat-button extended color="accent">
+      <mat-icon>edit</mat-icon>
+      Editar
+    </button>
+    <button mat-flat-button extended color="warn">
+      <mat-icon>delete</mat-icon>
+      Deletar
+    </button>
+  </div>
+  <div>
+    <div>{{ details.data.category }}</div>
+    <h1>{{ details.data.name }}</h1>
+    <p>{{ details.data.description }}</p>
+    <mat-divider></mat-divider>
+    <h2>Informações do livro</h2>
+    <ul>
+      <li>Id do livro: {{ details.data.id }}</li>
+      <li>Autor: {{ details.data.author }}</li>
+      <li>Editora: {{ details.data.publisher }}</li>
+      <li>Ano: {{ details.data.year }}</li>
+      <li>Criado por: {{ details.data.createdByUser }}</li>
+      <li>Atualizado em: {{ details.data.updateDate }}</li>
+      <li>Atualizado por: {{ details.data.updateByUser }}</li>
+      <li>Ativo: {{ details.data.active }}</li>
+    </ul>
+  </div>
+</section>

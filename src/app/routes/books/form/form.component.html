@@ -1,3 +1,14 @@
+<header>
+  <button
+    mat-stroked-button
+    extended
+    color="primary"
+    (click)="goBackToPrevPage()"
+  >
+    <mat-icon>arrow_back</mat-icon>
+    Voltar
+  </button>
+</header>
 <form class="example-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
   <mat-form-field class="example-full-width">
     <mat-label>Id</mat-label>
@@ -61,7 +72,7 @@
     <textarea matInput maxlength="500" formControlName="description"></textarea>
   </mat-form-field>
   <div class="wrapper-button">
-    <button mat-fab extended color="primary" type="submit">
+    <button mat-flat-button extended color="primary" type="submit">
       <mat-icon>send</mat-icon>
       Cadastrar
     </button>

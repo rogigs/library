@@ -5,7 +5,7 @@
     <mat-icon matSuffix>search</mat-icon>
     <mat-hint></mat-hint>
   </mat-form-field>
-  <button mat-fab extended color="" (click)="goToForm()">
+  <button mat-flat-button extended color="primary" (click)="goToForm()">
     <mat-icon>add</mat-icon>
     Adicionar
   </button>
@@ -32,15 +32,20 @@
   </mat-card-content>
   <mat-card-footer>
     <mat-card-actions class="actions">
-      <button mat-fab extended color="warn">
+      <button mat-flat-button extended color="accent">
         <mat-icon>edit</mat-icon>
         Editar
       </button>
-      <button mat-fab extended color="accent">
+      <button mat-flat-button extended color="warn">
         <mat-icon>delete</mat-icon>
         Deletar
       </button>
-      <button mat-fab extended color="primary">
+      <button
+        mat-stroked-button
+        extended
+        color="primary"
+        (click)="goToDetails()"
+      >
         <mat-icon>visibility</mat-icon>
         Ver mais
       </button>

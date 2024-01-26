@@ -45,4 +45,8 @@ export class BooksComponent implements OnInit {
   goToForm() {
     this.router.navigate(['/books/form']);
   }
+
+  goToDetails() {
+    this.router.navigate(['/books/details']);
+  }
 }

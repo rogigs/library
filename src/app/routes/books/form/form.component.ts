@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AppMaterialModule } from '../../../shared/app-material.module';
-
 @Component({
   selector: 'app-form',
   standalone: true,
@@ -22,7 +21,7 @@ export class FormComponent {
     { value: 'jp', viewValue: 'Japonês' },
   ];
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private location: Location) {}
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
@@ -38,6 +37,10 @@ export class FormComponent {
         alt: '',
       }),
     });
+  }
+
+  goBackToPrevPage(): void {
+    this.location.back();
   }
 
   onValidate(): boolean {
