@@ -1,0 +1,40 @@
+@if (books) { @for (book of books.data; track book.id) {
+
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title-group>
+      <img
+        class="img-content"
+        mat-card-image
+        src="{{ book.img.src }}"
+        alt="{{ book.img.alt }}"
+      />
+      <mat-card-title>{{ book.name }}</mat-card-title>
+      <mat-card-subtitle>Small</mat-card-subtitle>
+    </mat-card-title-group>
+  </mat-card-header>
+
+  <mat-card-content>
+    {{ book.description }}
+  </mat-card-content>
+  <mat-card-footer>
+    <mat-card-actions>
+      <button mat-fab extended color="warning">
+        <mat-icon>edit</mat-icon>
+        Editar
+      </button>
+      <button mat-fab extended color="error">
+        <mat-icon>delete</mat-icon>
+        Deletar
+      </button>
+      <button mat-fab extended color="primary">
+        <mat-icon>visibility</mat-icon>
+        Ver mais
+      </button>
+    </mat-card-actions>
+  </mat-card-footer>
+</mat-card>
+
+} @empty { Empty list of users } } @else {
+<p>Não existem livros na lista</p>
+}
