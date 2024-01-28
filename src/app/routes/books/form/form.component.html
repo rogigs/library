@@ -1,15 +1,14 @@
-<header>
+<form class="example-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
   <button
     mat-stroked-button
     extended
     color="primary"
     (click)="goBackToPrevPage()"
+    class="button-go-back"
   >
     <mat-icon>arrow_back</mat-icon>
     Voltar
   </button>
-</header>
-<form class="example-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
   <mat-form-field class="example-full-width">
     <mat-label>Id</mat-label>
     <input matInput formControlName="id" />
@@ -19,7 +18,7 @@
   <table
     class="example-full-width"
     aria-describedby="table-form-images"
-    formGroupName="img"
+    formGroupName="image"
   >
     <thead>
       <th class="align-left" colspan="2">Imagem</th>
@@ -56,17 +55,32 @@
   </mat-form-field>
   <mat-form-field class="example-full-width">
     <mat-label>Ano</mat-label>
-    <input matInput maxlength="4" value="3217dsaidsa" formControlName="year" />
+    <input
+      matInput
+      maxlength="4"
+      formControlName="year"
+      type="number"
+      min="1900"
+      max="2099"
+      step="1"
+    />
   </mat-form-field>
   <mat-form-field class="example-full-width">
     <mat-label>Idioma</mat-label>
     <mat-select formControlName="language">
-      @for (language of languages; track language) {
+      @for (language of languages; track language.value) {
       <mat-option [value]="language.value">{{ language.viewValue }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
-
+  <mat-form-field class="example-full-width">
+    <mat-label>Categoria</mat-label>
+    <mat-select formControlName="categoryId">
+      @for (category of categories; track category.value) {
+      <mat-option [value]="category.value">{{ category.viewValue }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
   <mat-form-field class="example-full-width">
     <mat-label>Descrição</mat-label>
     <textarea matInput maxlength="500" formControlName="description"></textarea>
