@@ -12,4 +12,8 @@ export class LibraryService {
   insertBook(data: Object) {
     return this.http.post(`${this.API}/books`, data);
   }
+
+  getAllBooks(page: number, pageSize: number) {
+    return this.http.get(`${this.API}/books?page=${page}&pageSize=${pageSize}`);
+  }
 }

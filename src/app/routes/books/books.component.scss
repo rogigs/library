@@ -28,3 +28,10 @@
   -webkit-line-clamp: 3; /* Número de linhas desejado */
   text-overflow: ellipsis;
 }
+
+.wrapper-card {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  align-items: center;
+}

@@ -10,54 +10,56 @@
     Adicionar
   </button>
 </header>
-@if (books) { @for (book of books.data; track book.id) {
-<mat-card class="card">
-  <mat-card-header>
-    <mat-card-title-group>
-      <img
-        class="img-content"
-        mat-card-image
-        src="{{ book.img.src }}"
-        alt="{{ book.img.alt }}"
-      />
-      <mat-card-title>{{ book.name }}</mat-card-title>
-      <mat-card-subtitle
-        >{{ book.author }} - {{ book.publisher }}</mat-card-subtitle
-      >
-    </mat-card-title-group>
-  </mat-card-header>
+<section class="wrapper-card">
+  @if (books) { @for (book of books.data; track book.id) {
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title-group>
+        <img
+          class="img-content"
+          mat-card-image
+          src="{{ book.image.src }}"
+          alt="{{ book.image.alt }}"
+        />
+        <mat-card-title>{{ book.name }}</mat-card-title>
+        <mat-card-subtitle
+          >{{ book.author }} - {{ book.publisher }}</mat-card-subtitle
+        >
+      </mat-card-title-group>
+    </mat-card-header>
 
-  <mat-card-content class="description">
-    {{ book.description }}
-  </mat-card-content>
-  <mat-card-footer>
-    <mat-card-actions class="actions">
-      <button
-        mat-flat-button
-        extended
-        color="accent"
-        (click)="goToForm(book.id)"
-      >
-        <mat-icon>edit</mat-icon>
-        Editar
-      </button>
-      <button mat-flat-button extended color="warn">
-        <mat-icon>delete</mat-icon>
-        Deletar
-      </button>
-      <button
-        mat-stroked-button
-        extended
-        color="primary"
-        (click)="goToDetails(book.id)"
-      >
-        <mat-icon>visibility</mat-icon>
-        Ver mais
-      </button>
-    </mat-card-actions>
-  </mat-card-footer>
-</mat-card>
+    <mat-card-content class="description">
+      {{ book.description }}
+    </mat-card-content>
+    <mat-card-footer>
+      <mat-card-actions class="actions">
+        <button
+          mat-flat-button
+          extended
+          color="accent"
+          (click)="goToForm(book.id)"
+        >
+          <mat-icon>edit</mat-icon>
+          Editar
+        </button>
+        <button mat-flat-button extended color="warn">
+          <mat-icon>delete</mat-icon>
+          Deletar
+        </button>
+        <button
+          mat-stroked-button
+          extended
+          color="primary"
+          (click)="goToDetails(book.id)"
+        >
+          <mat-icon>visibility</mat-icon>
+          Ver mais
+        </button>
+      </mat-card-actions>
+    </mat-card-footer>
+  </mat-card>
 
-} @empty { Empty list of users } } @else {
-<p>Não existem livros na lista</p>
-}
+  } @empty { Empty list of users } } @else {
+  <p>Não existem livros na lista</p>
+  }
+</section>
