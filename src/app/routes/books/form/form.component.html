@@ -1,59 +1,49 @@
-<form class="example-form" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+<form class="field-full-width" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
   <button
     mat-stroked-button
     extended
     color="primary"
     (click)="goBackToPrevPage()"
-    class="button-go-back"
+    class="books-form__button-go-back--button"
   >
     <mat-icon>arrow_back</mat-icon>
     Voltar
   </button>
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="field-full-width">
     <mat-label>Id</mat-label>
     <input matInput formControlName="id" />
-    <!-- TODO: disabled button -->
   </mat-form-field>
 
-  <table
-    class="example-full-width"
-    aria-describedby="table-form-images"
-    formGroupName="image"
-  >
-    <thead>
-      <th class="align-left" colspan="2">Imagem</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <mat-form-field class="example-full-width first-column">
-            <mat-label>Source</mat-label>
-            <input matInput formControlName="src" />
-          </mat-form-field>
-        </td>
-        <td>
-          <mat-form-field class="example-full-width">
-            <mat-label>Alt</mat-label>
-            <input matInput formControlName="alt" />
-          </mat-form-field>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="books-form__wrapper-image--div">
+    <p><b>Imagem</b></p>
+    <div class="books-form__wrapper-image-fields--div">
+      <mat-form-field class="field-full-width">
+        <mat-label>Source</mat-label>
+        <input matInput formControlName="src" />
+      </mat-form-field>
 
-  <mat-form-field class="example-full-width">
+      <mat-form-field class="field-full-width">
+        <mat-label>Alt</mat-label>
+        <input matInput formControlName="alt" />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <mat-form-field class="field-full-width">
     <mat-label>Nome</mat-label>
     <input matInput value="3217dsaidsa" formControlName="name" />
   </mat-form-field>
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="field-full-width">
     <mat-label>Autor</mat-label>
     <input matInput value="3217dsaidsa" formControlName="author" />
   </mat-form-field>
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="field-full-width">
     <mat-label>Editora</mat-label>
     <input matInput value="3217dsaidsa" formControlName="publisher" />
   </mat-form-field>
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="field-full-width">
     <mat-label>Ano</mat-label>
     <input
       matInput
@@ -65,7 +55,7 @@
       step="1"
     />
   </mat-form-field>
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="field-full-width">
     <mat-label>Idioma</mat-label>
     <mat-select formControlName="language">
       @for (language of languages; track language.value) {
@@ -73,7 +63,7 @@
       }
     </mat-select>
   </mat-form-field>
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="field-full-width">
     <mat-label>Categoria</mat-label>
     <mat-select formControlName="categoryId">
       @for (category of categories; track category.value) {
@@ -81,11 +71,11 @@
       }
     </mat-select>
   </mat-form-field>
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="field-full-width">
     <mat-label>Descrição</mat-label>
     <textarea matInput maxlength="500" formControlName="description"></textarea>
   </mat-form-field>
-  <div class="wrapper-button">
+  <div class="books-form__button-send--div">
     <button mat-flat-button extended color="primary" type="submit">
       <mat-icon>send</mat-icon>
       Cadastrar

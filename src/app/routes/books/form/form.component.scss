@@ -1,23 +1,38 @@
-.example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-  margin: 0 auto;
+@import "../../../breakpoints";
+@import "../../../shared";
+
+@media screen and (max-width: $breakpoint-sm) {
+  .books-form__wrapper-image--div {
+    .books-form__wrapper-image-fields--div {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .books-form__button-send--div {
+    .mdc-button {
+      width: 100%;
+    }
+  }
 }
 
-.button-go-back {
-  margin: 24px 0;
+.books-form__wrapper-image--div {
+  border-radius: 1em;
+  border: 1px solid #f3f3f3;
+  margin-bottom: 24px;
+  padding: 12px 12px 0 12px;
+
+  .books-form__wrapper-image-fields--div {
+    display: flex;
+    gap: 12px;
+  }
 }
 
-.example-full-width {
-  width: 100%;
+.books-form__button-go-back--button {
+  margin-bottom: 24px;
 }
 
-.wrapper-button {
+.books-form__button-send--div {
   display: flex;
   justify-content: flex-end;
-}
-
-.align-left {
-  text-align: left;
 }
