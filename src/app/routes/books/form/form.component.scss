@@ -1,5 +1,5 @@
-@import "../../../breakpoints";
-@import "../../../shared";
+@import "../../../../assets/scss/breakpoints";
+@import "../../../../assets/scss/fieldsShared";
 
 @media screen and (max-width: $breakpoint-sm) {
   .books-form__wrapper-image--div {
