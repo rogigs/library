@@ -42,7 +42,12 @@
           <mat-icon>edit</mat-icon>
           Editar
         </button>
-        <button mat-flat-button extended color="warn">
+        <button
+          mat-flat-button
+          extended
+          color="warn"
+          (click)="deleteBook(book.id)"
+        >
           <mat-icon>delete</mat-icon>
           Deletar
         </button>

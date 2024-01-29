@@ -38,4 +38,19 @@ export class BooksComponent implements OnInit {
   goToDetails(id: string): void {
     this.router.navigate([`/books/details/${id}`]);
   }
+
+  deleteBook(id: string): void {
+    const user = '1'; // TODO: get user
+
+    this.libraryService.deleteBook(id, user).subscribe(
+      (response) => {
+        console.log('Requisição POST enviada com sucesso:', response);
+        alert('Requisição POST enviada com sucesso!');
+      },
+      (error) => {
+        console.error('Erro ao enviar a requisição POST:', error);
+        alert('Erro ao enviar a requisição POST.');
+      }
+    );
+  }
 }

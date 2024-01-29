@@ -2,6 +2,7 @@ import { CommonModule, Location } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { LibraryService } from '../../../services/library/library.service';
 import { AppMaterialModule } from '../../../shared/app-material.module';
 @Component({
@@ -18,6 +19,7 @@ import { AppMaterialModule } from '../../../shared/app-material.module';
   providers: [LibraryService],
 })
 export class FormComponent {
+  idBook: string | null = null;
   formGroup!: FormGroup;
   languages = [
     { value: '0bb8bfec-9a27-4f9b-bcdc-c40a074eb31a', viewValue: 'Inglês' },
@@ -43,10 +45,39 @@ export class FormComponent {
   constructor(
     private formBuilder: FormBuilder,
     private location: Location,
-    private libraryService: LibraryService
+    private libraryService: LibraryService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.idBook = params['id'];
+      if (this.idBook) {
+        this.libraryService.getOneBook(this.idBook).subscribe(
+          (response: any) => {
+            this.formGroup = this.formBuilder.group({
+              id: { value: response.id, disabled: true },
+              name: response.name,
+              author: response.author,
+              publisher: response.publisher,
+              year: response.year,
+              description: response.description,
+              language: response.language,
+              categoryId: '', // TODO: make category
+              image: this.formBuilder.group({
+                src: '',
+                alt: '',
+              }),
+            });
+          },
+          (error) => {
+            console.error('Erro ao enviar a requisição POST:', error);
+            alert('Erro ao enviar a requisição POST.');
+          }
+        );
+      }
+    });
+
     this.formGroup = this.formBuilder.group({
       id: { value: '', disabled: true },
       name: '',
@@ -76,7 +107,24 @@ export class FormComponent {
     return true;
   }
 
-  onSubmit() {
+  onSubmit(): void {
+    if (this.idBook) {
+      this.libraryService
+        .updateBook(this.idBook, this.formGroup.value)
+        .subscribe(
+          (response) => {
+            console.log('Requisição POST enviada com sucesso:', response);
+            alert('Requisição POST enviada com sucesso!');
+          },
+          (error) => {
+            console.error('Erro ao enviar a requisição POST:', error);
+            alert('Erro ao enviar a requisição POST.');
+          }
+        );
+
+      return;
+    }
+
     this.libraryService.insertBook(this.formGroup.value).subscribe(
       (response) => {
         console.log('Requisição POST enviada com sucesso:', response);

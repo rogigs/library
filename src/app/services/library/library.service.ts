@@ -16,4 +16,16 @@ export class LibraryService {
   getAllBooks(page: number, pageSize: number) {
     return this.http.get(`${this.API}/books?page=${page}&pageSize=${pageSize}`);
   }
+
+  getOneBook(id: string) {
+    return this.http.get(`${this.API}/books/${id}`);
+  }
+
+  deleteBook(id: string, user: string) {
+    return this.http.patch(`${this.API}/books/${id}/user/${user}`, {});
+  }
+
+  updateBook(id: string, data: Object) {
+    return this.http.patch(`${this.API}/books/${id}/user/1`, data);
+  }
 }
