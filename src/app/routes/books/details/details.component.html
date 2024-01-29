@@ -1,7 +1,7 @@
-<section class="wrapper-section">
-  <div class="wrapper-book">
+<section class="books-details__wrapper--section">
+  <div class="books-details__wrapper-image--div">
     <img
-      class="image"
+      class="books-details__wrapper-image--img"
       src="{{ details.data.img.src }}"
       alt="{{ details.data.img.alt }}"
     />
@@ -28,12 +28,16 @@
       Deletar
     </button>
   </div>
-  <div>
-    <div>{{ details.data.category }}</div>
+  <div class="books-details__wrapper-info--div">
+    <div class="books-details__wrapper-info-category--div">
+      {{ details.data.category }}
+    </div>
     <h1>{{ details.data.name }}</h1>
     <p>{{ details.data.description }}</p>
     <mat-divider></mat-divider>
-    <h2 class="title-list">Informações do livro</h2>
+    <h2 class="books-details__wrapper-info-subtitle--h2">
+      Informações do livro
+    </h2>
     <mat-list>
       <mat-list-item>
         <span matListItemTitle>Id do livro</span>
