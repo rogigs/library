@@ -1,4 +1,4 @@
-<header class="header-form">
+<header class="books__header--form">
   <mat-form-field appearance="fill">
     <mat-label>Procurar livro...</mat-label>
     <input matInput />
@@ -10,13 +10,13 @@
     Adicionar
   </button>
 </header>
-<section class="wrapper-card">
+<section class="books__card-section">
   @if (books) { @for (book of books.data; track book.id) {
-  <mat-card class="card">
+  <mat-card class="books__card--card">
     <mat-card-header>
       <mat-card-title-group>
         <img
-          class="img-content"
+          class="books__card--image"
           mat-card-image
           src="{{ book.image.src }}"
           alt="{{ book.image.alt }}"
@@ -28,11 +28,11 @@
       </mat-card-title-group>
     </mat-card-header>
 
-    <mat-card-content class="description">
+    <mat-card-content class="books__card--content">
       {{ book.description }}
     </mat-card-content>
     <mat-card-footer>
-      <mat-card-actions class="actions">
+      <mat-card-actions class="books__card--card-actions">
         <button
           mat-flat-button
           extended

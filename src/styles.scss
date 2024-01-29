@@ -12,7 +12,8 @@ body {
 }
 
 .grid {
+  background-color: yellow;
   margin: 0 auto;
-  max-width: 720px;
-  height: 100vh;
+  max-width: 744px; // 720 + 24
+  padding: 24px;
 }
