@@ -1,10 +1,11 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs';
+import { Subject, catchError, map, take, takeUntil, throwError } from 'rxjs';
 import { LibraryService } from '../../../services/library/library.service';
 import { AppMaterialModule } from '../../../shared/app-material.module';
+import { Book } from '../../../types/book.types';
 @Component({
   selector: 'app-form',
   standalone: true,
@@ -14,8 +15,25 @@ import { AppMaterialModule } from '../../../shared/app-material.module';
   providers: [LibraryService],
 })
 export class FormComponent {
+  private ngUnsubscribe = new Subject<void>();
+
   idBook: string | null = null;
-  formGroup!: FormGroup;
+  bookForm = new FormGroup({
+    id: new FormControl({ value: '', disabled: true }),
+    name: new FormControl(),
+    author: new FormControl(''),
+    publisher: new FormControl(''),
+    year: new FormControl(''),
+    description: new FormControl(''),
+    language: new FormControl(''),
+    categoryId: new FormControl(''),
+    image: new FormGroup({
+      id: new FormControl(''),
+      src: new FormControl(''),
+      alt: new FormControl(''),
+    }),
+  });
+
   languages = [
     { value: '0bb8bfec-9a27-4f9b-bcdc-c40a074eb31a', viewValue: 'Inglês' },
     { value: '0bb8bfec-9a27-4f9b-bcdc-c40a074eb31a', viewValue: 'Espanhol' },
@@ -38,7 +56,6 @@ export class FormComponent {
   ];
 
   constructor(
-    private formBuilder: FormBuilder,
     private location: Location,
     private libraryService: LibraryService,
     private activatedRoute: ActivatedRoute
@@ -47,49 +64,44 @@ export class FormComponent {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.idBook = params['id'];
+
       if (this.idBook) {
         this.libraryService
-          .getOneBook(this.idBook as string)
-          .pipe(take(1))
-          .subscribe((response: any) => {
-            console.log(
-              '🚀 ~ FormComponent ~ .subscribe ~ response:',
-              response
-            );
-            this.formGroup = this.formBuilder.group({
-              id: { value: response.data.id, disabled: true },
-              name: response.data.name,
-              author: response.data.author,
-              publisher: response.data.publisher,
-              year: response.data.year,
-              description: response.data.description,
-              language: response.data.language,
-              categoryId: '', // TODO: make category
-              image: this.formBuilder.group({
-                src: response.data.image.src,
-                alt: response.data.image.alt,
-              }),
+          .getOneBook(this.idBook)
+          .pipe(
+            take(1),
+            map((response) => response.data),
+            takeUntil(this.ngUnsubscribe),
+            catchError((err) => {
+              console.error('caught mapping error and rethrowing', err);
+
+              return throwError(() => err);
+            })
+          )
+          .subscribe((res: Book) => {
+            this.bookForm.setValue({
+              id: res.id,
+              author: res.author,
+              categoryId: '',
+              name: res.name,
+              description: res.description,
+              image: {
+                id: res.image.id,
+                src: res.image.src,
+                alt: res.image.alt,
+              },
+              language: res.language,
+              publisher: res.publisher,
+              year: res.year,
             });
           });
-
-        return;
       }
     });
+  }
 
-    this.formGroup = this.formBuilder.group({
-      id: { value: '', disabled: true },
-      name: '',
-      author: '',
-      publisher: '',
-      year: '',
-      description: '',
-      language: '',
-      categoryId: '',
-      image: this.formBuilder.group({
-        src: '',
-        alt: '',
-      }),
-    });
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   goBackToPrevPage(): void {
@@ -106,20 +118,39 @@ export class FormComponent {
   }
 
   onSubmit(): void {
-    // if (this.idBook) {
-    //   this.libraryService
-    //     .updateBook(this.idBook, this.formGroup.value)
-    //     .pipe(take(1))
-    //     .subscribe(() => alert('Requisição  enviada com sucesso!'));
-    //   return;
-    // }
-    // this.libraryService
-    //   .insertBook(this.formGroup.value)
-    //   .pipe(take(1))
-    //   .subscribe(() => alert('Requisição POST enviada com sucesso!'));
+    const values = this.bookForm.value;
+    console.log('🚀 ~ FormComponent ~ onSubmit ~ values:', values);
+
+    if (this.idBook) {
+      this.libraryService
+        .updateBook(this.idBook, values)
+        .pipe(
+          take(1),
+          takeUntil(this.ngUnsubscribe),
+          catchError((err) => {
+            console.error('caught mapping error and rethrowing', err);
+
+            return throwError(() => err);
+          })
+        )
+        .subscribe(() => alert('Requisição  enviada com sucesso!'));
+
+      return;
+    }
+
+    this.libraryService
+      .insertBook(values)
+      .pipe(
+        take(1),
+        takeUntil(this.ngUnsubscribe),
+        catchError((err) => {
+          console.error('caught mapping error and rethrowing', err);
+
+          return throwError(() => err);
+        })
+      )
+      .subscribe(() => alert('Requisição POST enviada com sucesso!'));
   }
 
-  onReset() {
-    this.formGroup.reset();
-  }
+  onReset() {}
 }

@@ -1,4 +1,4 @@
-<form class="field-full-width" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+<form class="field-full-width" [formGroup]="bookForm" (ngSubmit)="onSubmit()">
   <button
     mat-stroked-button
     extended
@@ -28,8 +28,6 @@
       </mat-form-field>
     </div>
   </div>
-
-  <mat-divider></mat-divider>
 
   <mat-form-field class="field-full-width">
     <mat-label>Nome</mat-label>

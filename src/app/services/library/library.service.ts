@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ResponseOneBook } from '../../types/book.types';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +19,8 @@ export class LibraryService {
     return this.http.get(`${this.API}/books?page=${page}&pageSize=${pageSize}`);
   }
 
-  getOneBook(id: string) {
-    return this.http.get(`${this.API}/books/${id}`);
+  getOneBook(id: string): Observable<ResponseOneBook> {
+    return this.http.get<ResponseOneBook>(`${this.API}/books/${id}`);
   }
 
   deleteBook(id: string) {
