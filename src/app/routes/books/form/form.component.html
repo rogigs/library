@@ -63,7 +63,7 @@
   </mat-form-field>
   <mat-form-field class="field-full-width">
     <mat-label>Categoria</mat-label>
-    <mat-select formControlName="categoryId">
+    <mat-select formControlName="category">
       @for (category of categories; track category.value) {
       <mat-option [value]="category.value">{{ category.viewValue }}</mat-option>
       }

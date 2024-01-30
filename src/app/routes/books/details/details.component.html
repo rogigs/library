@@ -23,15 +23,14 @@
       <mat-icon>edit</mat-icon>
       Editar
     </button>
-    <button mat-flat-button extended color="warn">
+    <button mat-flat-button extended color="warn" (click)="deleteBook()">
       <mat-icon>delete</mat-icon>
       Deletar
     </button>
   </div>
   <div class="books-details__wrapper-info--div">
     <div class="books-details__wrapper-info-category--div">
-      {{ details.category }}
-      <!-- TODO: category in the server -->
+      {{ details.category.name }}
     </div>
     <h1>{{ details.name }}</h1>
     <p>{{ details.description }}</p>

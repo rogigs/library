@@ -1,9 +1,18 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { take } from 'rxjs';
+import {
+  Subject,
+  catchError,
+  map,
+  switchMap,
+  take,
+  takeUntil,
+  throwError,
+} from 'rxjs';
 import { LibraryService } from '../../services/library/library.service';
 import { AppMaterialModule } from '../../shared/app-material.module';
+import { Book } from '../../types/book.types';
 
 @Component({
   selector: 'app-books',
@@ -14,16 +23,33 @@ import { AppMaterialModule } from '../../shared/app-material.module';
   providers: [LibraryService],
 })
 export class BooksComponent implements OnInit {
-  books: any;
+  private ngUnsubscribe = new Subject<void>();
+  books!: Omit<Book, 'category'>[];
 
   constructor(private router: Router, private libraryService: LibraryService) {}
 
   ngOnInit() {
+    this.loadBooks();
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+  loadBooks() {
     this.libraryService
       .getAllBooks(1, 10)
-      .pipe(take(1))
-      .subscribe((res: any) => {
-        this.books = res.data.items;
+      .pipe(
+        map((response) => response.data.items as Omit<Book, 'category'>[]),
+        catchError((err) => {
+          console.error('caught mapping error and rethrowing', err);
+          return throwError(() => err);
+        }),
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe((res) => {
+        this.books = res;
       });
   }
 
@@ -44,6 +70,21 @@ export class BooksComponent implements OnInit {
   }
 
   deleteBook(id: string): void {
-    this.libraryService.deleteBook(id).subscribe();
+    this.libraryService
+      .deleteBook(id)
+      .pipe(
+        take(1),
+        switchMap(() => this.libraryService.getAllBooks(1, 10)),
+        map((response) => response.data.items as Omit<Book, 'category'>[]),
+        takeUntil(this.ngUnsubscribe),
+        catchError((err) => {
+          console.error('caught mapping error and rethrowing', err);
+
+          return throwError(() => err);
+        })
+      )
+      .subscribe((res) => {
+        this.books = res;
+      });
   }
 }

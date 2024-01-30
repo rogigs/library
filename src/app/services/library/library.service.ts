@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResponseOneBook } from '../../types/book.types';
+import {
+  BookForm,
+  ResponseBookPagination,
+  ResponseOneBook,
+} from '../../types/book.types';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +15,17 @@ export class LibraryService {
 
   constructor(private http: HttpClient) {}
 
-  insertBook(data: Object) {
-    return this.http.post(`${this.API}/books`, data);
+  insertBook(data: BookForm): Observable<ResponseOneBook> {
+    return this.http.post<ResponseOneBook>(`${this.API}/books`, data);
   }
 
-  getAllBooks(page: number, pageSize: number) {
-    return this.http.get(`${this.API}/books?page=${page}&pageSize=${pageSize}`);
+  getAllBooks(
+    page: number,
+    pageSize: number
+  ): Observable<ResponseBookPagination> {
+    return this.http.get<ResponseBookPagination>(
+      `${this.API}/books?page=${page}&pageSize=${pageSize}`
+    );
   }
 
   getOneBook(id: string): Observable<ResponseOneBook> {
@@ -27,7 +36,7 @@ export class LibraryService {
     return this.http.patch(`${this.API}/books/${id}/delete`, {});
   }
 
-  updateBook(id: string, data: Object) {
+  updateBook(id: string, data: BookForm) {
     return this.http.patch(`${this.API}/books/${id}`, data);
   }
 }

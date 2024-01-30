@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject, catchError, map, take, takeUntil, throwError } from 'rxjs';
 import { LibraryService } from '../../../services/library/library.service';
 import { AppMaterialModule } from '../../../shared/app-material.module';
-import { Book } from '../../../types/book.types';
+import { Book, BookForm } from '../../../types/book.types';
 @Component({
   selector: 'app-form',
   standalone: true,
@@ -26,7 +26,7 @@ export class FormComponent {
     year: new FormControl(''),
     description: new FormControl(''),
     language: new FormControl(''),
-    categoryId: new FormControl(''),
+    category: new FormControl(''),
     image: new FormGroup({
       id: new FormControl(''),
       src: new FormControl(''),
@@ -82,7 +82,7 @@ export class FormComponent {
             this.bookForm.setValue({
               id: res.id,
               author: res.author,
-              categoryId: '',
+              category: '',
               name: res.name,
               description: res.description,
               image: {
@@ -118,8 +118,7 @@ export class FormComponent {
   }
 
   onSubmit(): void {
-    const values = this.bookForm.value;
-    console.log('🚀 ~ FormComponent ~ onSubmit ~ values:', values);
+    const values = this.bookForm.value as BookForm;
 
     if (this.idBook) {
       this.libraryService
@@ -139,7 +138,10 @@ export class FormComponent {
     }
 
     this.libraryService
-      .insertBook(values)
+      .insertBook({
+        ...values,
+        image: { src: values.image.src, alt: values.image.alt },
+      })
       .pipe(
         take(1),
         takeUntil(this.ngUnsubscribe),
