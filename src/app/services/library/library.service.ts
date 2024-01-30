@@ -21,11 +21,11 @@ export class LibraryService {
     return this.http.get(`${this.API}/books/${id}`);
   }
 
-  deleteBook(id: string, user: string) {
-    return this.http.patch(`${this.API}/books/${id}/user/${user}`, {});
+  deleteBook(id: string) {
+    return this.http.patch(`${this.API}/books/${id}/delete`, {});
   }
 
   updateBook(id: string, data: Object) {
-    return this.http.patch(`${this.API}/books/${id}/user/1`, data);
+    return this.http.patch(`${this.API}/books/${id}`, data);
   }
 }

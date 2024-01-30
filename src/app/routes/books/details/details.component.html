@@ -2,8 +2,8 @@
   <div class="books-details__wrapper-image--div">
     <img
       class="books-details__wrapper-image--img"
-      src="{{ details.data.img.src }}"
-      alt="{{ details.data.img.alt }}"
+      src="{{ details.image.src }}"
+      alt="{{ details.image.alt }}"
     />
     <button
       mat-stroked-button
@@ -18,7 +18,7 @@
       mat-flat-button
       extended
       color="accent"
-      (click)="goToForm(details.data.id)"
+      (click)="goToForm(details.id)"
     >
       <mat-icon>edit</mat-icon>
       Editar
@@ -30,10 +30,11 @@
   </div>
   <div class="books-details__wrapper-info--div">
     <div class="books-details__wrapper-info-category--div">
-      {{ details.data.category }}
+      {{ details.category }}
+      <!-- TODO: category in the server -->
     </div>
-    <h1>{{ details.data.name }}</h1>
-    <p>{{ details.data.description }}</p>
+    <h1>{{ details.name }}</h1>
+    <p>{{ details.description }}</p>
     <mat-divider></mat-divider>
     <h2 class="books-details__wrapper-info-subtitle--h2">
       Informações do livro
@@ -41,36 +42,36 @@
     <mat-list>
       <mat-list-item>
         <span matListItemTitle>Id do livro</span>
-        <span mat-line>{{ details.data.id }}</span>
+        <span mat-line>{{ details.id }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Autor:</span>
 
-        <span mat-line>{{ details.data.author }}</span>
+        <span mat-line>{{ details.author }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Editora:</span>
-        <span mat-line>{{ details.data.publisher }}</span>
+        <span mat-line>{{ details.publisher }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Ano:</span>
-        <span mat-line>{{ details.data.year }}</span>
+        <span mat-line>{{ details.year }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Criado por: </span>
-        <span mat-line>{{ details.data.createdByUser }}</span>
+        <span mat-line>{{ details.createdByUser }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Atualizado em:</span>
-        <span mat-line>Atualizado em: {{ details.data.updateDate }}</span>
+        <span mat-line>Atualizado em: {{ details.updateDate }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Atualizado por:</span>
-        <span mat-line>{{ details.data.updateByUser }}</span>
+        <span mat-line>{{ details.updateByUser }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Ativo:</span>
-        <span mat-line>{{ details.data.active }}</span>
+        <span mat-line>{{ details.active }}</span>
       </mat-list-item>
     </mat-list>
   </div>

@@ -11,7 +11,7 @@
   </button>
 </header>
 <section class="books__card-section">
-  @if (books) { @for (book of books.data; track book.id) {
+  @if (books ) { @for (book of books; track book.id) {
   <mat-card class="books__card--card">
     <mat-card-header>
       <mat-card-title-group>
@@ -64,7 +64,9 @@
     </mat-card-footer>
   </mat-card>
 
-  } @empty { Empty list of users } } @else {
-  <p>Não existem livros na lista</p>
+  } @empty {
+  <p>Nenhum livro foi cadastrado ainda</p>
+  } } @else {
+  <p>...</p>
   }
 </section>

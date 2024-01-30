@@ -1,13 +1,14 @@
-import { HttpClientModule } from '@angular/common/http';
+import { AsyncPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 import { LibraryService } from '../../services/library/library.service';
 import { AppMaterialModule } from '../../shared/app-material.module';
 
 @Component({
   selector: 'app-books',
   standalone: true,
-  imports: [AppMaterialModule, HttpClientModule],
+  imports: [AppMaterialModule, AsyncPipe],
   templateUrl: './books.component.html',
   styleUrl: './books.component.scss',
   providers: [LibraryService],
@@ -18,9 +19,12 @@ export class BooksComponent implements OnInit {
   constructor(private router: Router, private libraryService: LibraryService) {}
 
   ngOnInit() {
-    this.libraryService.getAllBooks(1, 10).subscribe((data) => {
-      this.books = data;
-    });
+    this.libraryService
+      .getAllBooks(1, 10)
+      .pipe(take(1))
+      .subscribe((res: any) => {
+        this.books = res.data.items;
+      });
   }
 
   log(state: any) {
@@ -40,17 +44,6 @@ export class BooksComponent implements OnInit {
   }
 
   deleteBook(id: string): void {
-    const user = '1'; // TODO: get user
-
-    this.libraryService.deleteBook(id, user).subscribe(
-      (response) => {
-        console.log('Requisição POST enviada com sucesso:', response);
-        alert('Requisição POST enviada com sucesso!');
-      },
-      (error) => {
-        console.error('Erro ao enviar a requisição POST:', error);
-        alert('Erro ao enviar a requisição POST.');
-      }
-    );
+    this.libraryService.deleteBook(id).subscribe();
   }
 }

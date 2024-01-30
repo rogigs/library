@@ -1,19 +1,14 @@
 import { CommonModule, Location } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { take } from 'rxjs';
 import { LibraryService } from '../../../services/library/library.service';
 import { AppMaterialModule } from '../../../shared/app-material.module';
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [
-    AppMaterialModule,
-    CommonModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-  ],
+  imports: [AppMaterialModule, CommonModule, ReactiveFormsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
   providers: [LibraryService],
@@ -53,28 +48,31 @@ export class FormComponent {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.idBook = params['id'];
       if (this.idBook) {
-        this.libraryService.getOneBook(this.idBook).subscribe(
-          (response: any) => {
+        this.libraryService
+          .getOneBook(this.idBook as string)
+          .pipe(take(1))
+          .subscribe((response: any) => {
+            console.log(
+              '🚀 ~ FormComponent ~ .subscribe ~ response:',
+              response
+            );
             this.formGroup = this.formBuilder.group({
-              id: { value: response.id, disabled: true },
-              name: response.name,
-              author: response.author,
-              publisher: response.publisher,
-              year: response.year,
-              description: response.description,
-              language: response.language,
+              id: { value: response.data.id, disabled: true },
+              name: response.data.name,
+              author: response.data.author,
+              publisher: response.data.publisher,
+              year: response.data.year,
+              description: response.data.description,
+              language: response.data.language,
               categoryId: '', // TODO: make category
               image: this.formBuilder.group({
-                src: '',
-                alt: '',
+                src: response.data.image.src,
+                alt: response.data.image.alt,
               }),
             });
-          },
-          (error) => {
-            console.error('Erro ao enviar a requisição POST:', error);
-            alert('Erro ao enviar a requisição POST.');
-          }
-        );
+          });
+
+        return;
       }
     });
 
@@ -108,33 +106,17 @@ export class FormComponent {
   }
 
   onSubmit(): void {
-    if (this.idBook) {
-      this.libraryService
-        .updateBook(this.idBook, this.formGroup.value)
-        .subscribe(
-          (response) => {
-            console.log('Requisição POST enviada com sucesso:', response);
-            alert('Requisição POST enviada com sucesso!');
-          },
-          (error) => {
-            console.error('Erro ao enviar a requisição POST:', error);
-            alert('Erro ao enviar a requisição POST.');
-          }
-        );
-
-      return;
-    }
-
-    this.libraryService.insertBook(this.formGroup.value).subscribe(
-      (response) => {
-        console.log('Requisição POST enviada com sucesso:', response);
-        alert('Requisição POST enviada com sucesso!');
-      },
-      (error) => {
-        console.error('Erro ao enviar a requisição POST:', error);
-        alert('Erro ao enviar a requisição POST.');
-      }
-    );
+    // if (this.idBook) {
+    //   this.libraryService
+    //     .updateBook(this.idBook, this.formGroup.value)
+    //     .pipe(take(1))
+    //     .subscribe(() => alert('Requisição  enviada com sucesso!'));
+    //   return;
+    // }
+    // this.libraryService
+    //   .insertBook(this.formGroup.value)
+    //   .pipe(take(1))
+    //   .subscribe(() => alert('Requisição POST enviada com sucesso!'));
   }
 
   onReset() {
