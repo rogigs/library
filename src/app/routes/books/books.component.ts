@@ -12,7 +12,10 @@ import {
   takeUntil,
   throwError,
 } from 'rxjs';
-import { DialogComponent } from '../../components/dialog/dialog.component';
+import {
+  DialogComponent,
+  DialogData,
+} from '../../components/dialog/dialog.component';
 import { LibraryService } from '../../services/library/library.service';
 import { AppMaterialModule } from '../../shared/app-material.module';
 import { Book } from '../../types/book.types';
@@ -26,6 +29,11 @@ import { Book } from '../../types/book.types';
   providers: [LibraryService],
 })
 export class BooksComponent implements OnInit {
+  // TODO: add pagination
+  // component pagination angular material
+  // cache memory of books
+  // visible books books.slice(pageSize * page, pageSize * page + pageSize )
+
   private ngUnsubscribe = new Subject<void>();
   books!: Omit<Book, 'category'>[];
   name: string = '';
@@ -45,17 +53,21 @@ export class BooksComponent implements OnInit {
     this.ngUnsubscribe.complete();
   }
 
+  openDialog(data: DialogData): void {
+    this.dialog.open(DialogComponent, {
+      data,
+    });
+  }
+
   loadBooks(): void {
     this.libraryService
       .getAllBooks(1, 10)
       .pipe(
         map((response) => response.data.items as Omit<Book, 'category'>[]),
         catchError((err) => {
-          this.dialog.open(DialogComponent, {
-            data: {
-              title: 'Error',
-              content: 'Por favor, recarregue a página para tentar novamente.',
-            },
+          this.openDialog({
+            title: 'error',
+            content: 'Por favor, recarregue a página para tentar novamente.',
           });
 
           return throwError(() => err);
@@ -86,11 +98,9 @@ export class BooksComponent implements OnInit {
         map((response) => response.data.items as Omit<Book, 'category'>[]),
         takeUntil(this.ngUnsubscribe),
         catchError((err) => {
-          this.dialog.open(DialogComponent, {
-            data: {
-              title: 'Error',
-              content: 'Por favor, tente novamente.',
-            },
+          this.openDialog({
+            title: 'error',
+            content: 'Por favor, tente novamente.',
           });
 
           return throwError(() => err);
@@ -108,11 +118,9 @@ export class BooksComponent implements OnInit {
         .pipe(
           map((response: any) => response.data),
           catchError((err) => {
-            this.dialog.open(DialogComponent, {
-              data: {
-                title: 'Error',
-                content: 'Por favor, tente novamente.',
-              },
+            this.openDialog({
+              title: 'error',
+              content: 'Por favor, tente novamente.',
             });
 
             return throwError(() => err);
@@ -126,11 +134,9 @@ export class BooksComponent implements OnInit {
       return;
     }
 
-    this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Warning',
-        content: 'Por favor, insira o nome de um livro.',
-      },
+    this.openDialog({
+      title: 'warning',
+      content: 'Por favor, insira o nome de um livro.',
     });
   }
 }

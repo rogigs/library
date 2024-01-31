@@ -10,7 +10,10 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, catchError, map, take, takeUntil, throwError } from 'rxjs';
-import { DialogComponent } from '../../../components/dialog/dialog.component';
+import {
+  DialogComponent,
+  DialogData,
+} from '../../../components/dialog/dialog.component';
 import { LibraryService } from '../../../services/library/library.service';
 import { AppMaterialModule } from '../../../shared/app-material.module';
 import { Book, BookForm } from '../../../types/book.types';
@@ -45,6 +48,7 @@ export class FormComponent {
     }),
   });
 
+  // TODO: get languages of server
   languages = [
     { value: '0bb8bfec-9a27-4f9b-bcdc-c40a074eb31a', viewValue: 'Inglês' },
     { value: '0bb8bfec-9a27-4f9b-bcdc-c40a074eb31a', viewValue: 'Espanhol' },
@@ -54,6 +58,7 @@ export class FormComponent {
     { value: '0bb8bfec-9a27-4f9b-bcdc-c40a074eb31a', viewValue: 'Italiano' },
     { value: '0bb8bfec-9a27-4f9b-bcdc-c40a074eb31a', viewValue: 'Japonês' },
   ];
+  // TODO: get categories of server
   categories = [
     { value: '0bb8bfec-9a27-4f9b-bcdc-c40a074eb31a', viewValue: 'Ficção' },
     { value: '0bb8bfec-9a27-4f9b-bcdc-c40a074eb31a', viewValue: 'Não Ficção' },
@@ -85,7 +90,10 @@ export class FormComponent {
             map((response) => response.data),
             takeUntil(this.ngUnsubscribe),
             catchError((err) => {
-              console.error('caught mapping error and rethrowing', err);
+              this.openDialog({
+                title: 'error',
+                content: 'Por favor, recarregue a página.',
+              });
 
               return throwError(() => err);
             })
@@ -116,6 +124,12 @@ export class FormComponent {
     this.ngUnsubscribe.complete();
   }
 
+  openDialog(data: DialogData): void {
+    this.dialog.open(DialogComponent, {
+      data,
+    });
+  }
+
   goBackToPrevPage(): void {
     this.location.back();
   }
@@ -138,22 +152,18 @@ export class FormComponent {
           take(1),
           takeUntil(this.ngUnsubscribe),
           catchError((err) => {
-            this.dialog.open(DialogComponent, {
-              data: {
-                title: 'Error',
-                content: 'Por favor, tente novamente.',
-              },
+            this.openDialog({
+              title: 'error',
+              content: 'Por favor, tente novamente.',
             });
 
             return throwError(() => err);
           })
         )
         .subscribe(() => {
-          this.dialog.open(DialogComponent, {
-            data: {
-              title: 'Success',
-              content: 'Livro atualizado com sucesso',
-            },
+          this.openDialog({
+            title: 'success',
+            content: 'Livro atualizado com sucesso',
           });
 
           this.resetForm();
@@ -171,22 +181,18 @@ export class FormComponent {
         take(1),
         takeUntil(this.ngUnsubscribe),
         catchError((err) => {
-          this.dialog.open(DialogComponent, {
-            data: {
-              title: 'Error',
-              content: 'Por favor, tente novamente.',
-            },
+          this.openDialog({
+            title: 'error',
+            content: 'Por favor, tente novamente.',
           });
 
           return throwError(() => err);
         })
       )
       .subscribe(() => {
-        this.dialog.open(DialogComponent, {
-          data: {
-            title: 'Success',
-            content: 'Livro inserido com sucesso',
-          },
+        this.openDialog({
+          title: 'success',
+          content: 'Livro inserido com sucesso',
         });
 
         this.resetForm();

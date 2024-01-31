@@ -3,7 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, catchError, map, take, takeUntil, throwError } from 'rxjs';
-import { DialogComponent } from '../../../components/dialog/dialog.component';
+import {
+  DialogComponent,
+  DialogData,
+} from '../../../components/dialog/dialog.component';
 import { LibraryService } from '../../../services/library/library.service';
 import { AppMaterialModule } from '../../../shared/app-material.module';
 import { Book } from '../../../types/book.types';
@@ -36,7 +39,10 @@ export class DetailsComponent implements OnInit {
           map((response) => response.data),
           takeUntil(this.ngUnsubscribe),
           catchError((err) => {
-            console.error('caught mapping error and rethrowing', err);
+            this.openDialog({
+              title: 'error',
+              content: 'Por favor, recarregue a página.',
+            });
 
             return throwError(() => err);
           })
@@ -50,6 +56,12 @@ export class DetailsComponent implements OnInit {
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  openDialog(data: DialogData): void {
+    this.dialog.open(DialogComponent, {
+      data,
+    });
   }
 
   goBackToPrevPage(): void {
@@ -69,22 +81,18 @@ export class DetailsComponent implements OnInit {
         take(1),
         takeUntil(this.ngUnsubscribe),
         catchError((err) => {
-          this.dialog.open(DialogComponent, {
-            data: {
-              title: 'Error',
-              content: 'Por favor, tente novamente.',
-            },
+          this.openDialog({
+            title: 'error',
+            content: 'Por favor, tente novamente.',
           });
 
           return throwError(() => err);
         })
       )
       .subscribe(() => {
-        this.dialog.open(DialogComponent, {
-          data: {
-            title: 'Success',
-            content: 'O livro foi deletado com sucesso.',
-          },
+        this.openDialog({
+          title: 'success',
+          content: 'O livro foi deletado com sucesso.',
         });
       });
   }

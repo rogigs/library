@@ -5,6 +5,6 @@ export const routes: Routes = [
   {
     path: 'books',
     loadChildren: () =>
-      import('./routes/books/books.routes').then((m) => m.BOOKS_ROUTES), // isso muda
+      import('./routes/books/books.routes').then((m) => m.BOOKS_ROUTES),
   },
 ];
