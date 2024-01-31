@@ -39,6 +39,7 @@ export class LibraryService {
     return this.http.get<ResponseOneBook>(`${this.API}/books/find/${id}`);
   }
 
+  // TODO: add types response when change value of body in server
   deleteBook(id: string) {
     return this.http.patch(`${this.API}/books/${id}/delete`, {});
   }

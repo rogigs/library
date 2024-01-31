@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { environment } from '../../environments/environment.development';
 @Injectable({
   providedIn: 'root',
 })
@@ -13,9 +13,9 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    // TODO: get token of a Cookie
-    this.token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJpYXQiOjE3MDY1NTk3MDEsImV4cCI6MTczODExNzMwMX0.YcGpAK0s42VmRyF8ADVmD0RG7mIVFPvAerEPc5rZxq0';
+    // TODO: set and get token of a Cookie
+    this.token = environment.TOKEN;
+
     return this.token;
   }
 }
