@@ -1,7 +1,9 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, catchError, map, take, takeUntil, throwError } from 'rxjs';
+import { DialogComponent } from '../../../components/dialog/dialog.component';
 import { LibraryService } from '../../../services/library/library.service';
 import { AppMaterialModule } from '../../../shared/app-material.module';
 import { Book } from '../../../types/book.types';
@@ -21,7 +23,8 @@ export class DetailsComponent implements OnInit {
     private location: Location,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private libraryService: LibraryService
+    private libraryService: LibraryService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -66,11 +69,23 @@ export class DetailsComponent implements OnInit {
         take(1),
         takeUntil(this.ngUnsubscribe),
         catchError((err) => {
-          console.error('caught mapping error and rethrowing', err);
+          this.dialog.open(DialogComponent, {
+            data: {
+              title: 'Error',
+              content: 'Por favor, tente novamente.',
+            },
+          });
 
           return throwError(() => err);
         })
       )
-      .subscribe();
+      .subscribe(() => {
+        this.dialog.open(DialogComponent, {
+          data: {
+            title: 'Success',
+            content: 'O livro foi deletado com sucesso.',
+          },
+        });
+      });
   }
 }

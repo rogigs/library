@@ -1,13 +1,16 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, catchError, map, take, takeUntil, throwError } from 'rxjs';
+import { DialogComponent } from '../../../components/dialog/dialog.component';
 import { LibraryService } from '../../../services/library/library.service';
 import { AppMaterialModule } from '../../../shared/app-material.module';
 import { Book, BookForm } from '../../../types/book.types';
@@ -66,7 +69,8 @@ export class FormComponent {
   constructor(
     private location: Location,
     private libraryService: LibraryService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -134,12 +138,26 @@ export class FormComponent {
           take(1),
           takeUntil(this.ngUnsubscribe),
           catchError((err) => {
-            console.error('caught mapping error and rethrowing', err);
+            this.dialog.open(DialogComponent, {
+              data: {
+                title: 'Error',
+                content: 'Por favor, tente novamente.',
+              },
+            });
 
             return throwError(() => err);
           })
         )
-        .subscribe(() => alert('Requisição  enviada com sucesso!'));
+        .subscribe(() => {
+          this.dialog.open(DialogComponent, {
+            data: {
+              title: 'Success',
+              content: 'Livro atualizado com sucesso',
+            },
+          });
+
+          this.resetForm();
+        });
 
       return;
     }
@@ -153,13 +171,52 @@ export class FormComponent {
         take(1),
         takeUntil(this.ngUnsubscribe),
         catchError((err) => {
-          console.error('caught mapping error and rethrowing', err);
+          this.dialog.open(DialogComponent, {
+            data: {
+              title: 'Error',
+              content: 'Por favor, tente novamente.',
+            },
+          });
 
           return throwError(() => err);
         })
       )
-      .subscribe(() => alert('Requisição POST enviada com sucesso!'));
+      .subscribe(() => {
+        this.dialog.open(DialogComponent, {
+          data: {
+            title: 'Success',
+            content: 'Livro inserido com sucesso',
+          },
+        });
+
+        this.resetForm();
+      });
   }
 
-  onReset() {}
+  resetForm(): void {
+    const clear = (control: AbstractControl) => {
+      control.clearValidators();
+      control.updateValueAndValidity();
+    };
+
+    if (this.bookForm) {
+      this.bookForm.reset();
+
+      Object.keys(this.bookForm.controls).forEach((key) => {
+        const control = this.bookForm.get(key);
+
+        if (control instanceof FormGroup) {
+          Object.keys(control.controls).forEach((innerKey) => {
+            const innerControl = control.get(innerKey);
+
+            if (innerControl) clear(innerControl);
+          });
+
+          return;
+        }
+
+        if (control) clear(control);
+      });
+    }
+  }
 }
