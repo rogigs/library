@@ -1,6 +1,11 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, catchError, map, take, takeUntil, throwError } from 'rxjs';
 import { LibraryService } from '../../../services/library/library.service';
@@ -20,17 +25,20 @@ export class FormComponent {
   idBook: string | null = null;
   bookForm = new FormGroup({
     id: new FormControl({ value: '', disabled: true }),
-    name: new FormControl(),
-    author: new FormControl(''),
-    publisher: new FormControl(''),
-    year: new FormControl(''),
-    description: new FormControl(''),
-    language: new FormControl(''),
-    category: new FormControl(''),
+    name: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    author: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    publisher: new FormControl('', [Validators.required]),
+    year: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    description: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(500),
+    ]),
+    language: new FormControl('', [Validators.required]),
+    category: new FormControl('', [Validators.required]),
     image: new FormGroup({
       id: new FormControl(''),
-      src: new FormControl(''),
-      alt: new FormControl(''),
+      src: new FormControl('', [Validators.required]),
+      alt: new FormControl('', [Validators.required]),
     }),
   });
 
@@ -109,16 +117,15 @@ export class FormComponent {
   }
 
   onValidate(): boolean {
-    // if (!this.formGroup.value.hour) {
-    //   this.messageError = 'Por favor preencha o formulário';
-    //   return false;
-    // }
-
-    return true;
+    return this.bookForm.status === 'VALID';
   }
 
   onSubmit(): void {
     const values = this.bookForm.value as BookForm;
+
+    if (!this.onValidate()) {
+      return;
+    }
 
     if (this.idBook) {
       this.libraryService

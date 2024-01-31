@@ -96,3 +96,8 @@ export const mockGetBookPagination = {
     totalPages: 1,
   },
 };
+
+export const mockSearchBook = {
+  status: 200,
+  data: mockGetBookPagination.data.items,
+};

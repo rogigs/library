@@ -1,6 +1,7 @@
 import {
   mockGetBookPagination,
   mockGetOneBook,
+  mockSearchBook,
 } from '../services/library/library.service.mock';
 
 export type BookForm = {
@@ -19,5 +20,6 @@ export type BookForm = {
 };
 
 export type Book = typeof mockGetOneBook.data;
+export type ResponseSearchBook = typeof mockSearchBook.data;
 export type ResponseOneBook = typeof mockGetOneBook;
 export type ResponseBookPagination = typeof mockGetBookPagination;

@@ -5,6 +5,7 @@ import {
   BookForm,
   ResponseBookPagination,
   ResponseOneBook,
+  ResponseSearchBook,
 } from '../../types/book.types';
 
 @Injectable({
@@ -19,17 +20,23 @@ export class LibraryService {
     return this.http.post<ResponseOneBook>(`${this.API}/books`, data);
   }
 
+  searchBook(name: string): Observable<ResponseSearchBook> {
+    return this.http.get<ResponseSearchBook>(
+      `${this.API}/books/search?name=${name}`
+    );
+  }
+
   getAllBooks(
     page: number,
     pageSize: number
   ): Observable<ResponseBookPagination> {
     return this.http.get<ResponseBookPagination>(
-      `${this.API}/books?page=${page}&pageSize=${pageSize}`
+      `${this.API}/books/pagination?page=${page}&pageSize=${pageSize}`
     );
   }
 
   getOneBook(id: string): Observable<ResponseOneBook> {
-    return this.http.get<ResponseOneBook>(`${this.API}/books/${id}`);
+    return this.http.get<ResponseOneBook>(`${this.API}/books/find/${id}`);
   }
 
   deleteBook(id: string) {
