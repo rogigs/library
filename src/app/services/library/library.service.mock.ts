@@ -16,7 +16,11 @@ export const mockGetOneBook = {
       createdAt: '2024-01-27T20:32:10.000Z',
       name: 'novo',
     },
-    language: '001df5c9-b9ec-4f1e-b913-d0a91137b28e',
+    language: {
+      id: 'c8488111-e73e-48b9-946e-0a811955a1e7',
+      createdAt: '2024-02-01T13:58:49.000Z',
+      name: 'Cinema',
+    },
     image: {
       id: '001df5c9-b9ec-4f1e-b913-d0a91137b28e',
       createdAt: '2024-01-31T06:04:48.000Z',

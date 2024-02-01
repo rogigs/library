@@ -30,10 +30,10 @@
   </div>
   <div class="books-details__wrapper-info--div">
     <div class="books-details__wrapper-info-category--div">
-      {{ details.category.name }}
+      {{ details?.category?.name }}
     </div>
-    <h1>{{ details.name }}</h1>
-    <p>{{ details.description }}</p>
+    <h1>{{ details?.name }}</h1>
+    <p>{{ details?.description }}</p>
     <mat-divider></mat-divider>
     <h2 class="books-details__wrapper-info-subtitle--h2">
       Informações do livro
@@ -70,7 +70,7 @@
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Ativo:</span>
-        <span mat-line>{{ details.active }}</span>
+        <span mat-line>{{ details?.active }}</span>
       </mat-list-item>
     </mat-list>
   </div>

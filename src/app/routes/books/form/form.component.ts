@@ -140,7 +140,7 @@ export class FormComponent {
           this.bookForm.setValue({
             id: res.id,
             author: res.author,
-            category: '',
+            category: res.category.id,
             name: res.name,
             description: res.description,
             image: {
@@ -148,7 +148,7 @@ export class FormComponent {
               src: res.image.src,
               alt: res.image.alt,
             },
-            language: res.language,
+            language: res.language.id,
             publisher: res.publisher,
             year: res.year,
           });
