@@ -31,15 +31,15 @@
 
   <mat-form-field class="field-full-width">
     <mat-label>Nome</mat-label>
-    <input matInput value="3217dsaidsa" formControlName="name" />
+    <input matInput formControlName="name" />
   </mat-form-field>
   <mat-form-field class="field-full-width">
     <mat-label>Autor</mat-label>
-    <input matInput value="3217dsaidsa" formControlName="author" />
+    <input matInput formControlName="author" />
   </mat-form-field>
   <mat-form-field class="field-full-width">
     <mat-label>Editora</mat-label>
-    <input matInput value="3217dsaidsa" formControlName="publisher" />
+    <input matInput formControlName="publisher" />
   </mat-form-field>
   <mat-form-field class="field-full-width">
     <mat-label>Ano</mat-label>
@@ -56,16 +56,16 @@
   <mat-form-field class="field-full-width">
     <mat-label>Idioma</mat-label>
     <mat-select formControlName="language">
-      @for (language of languages; track language.value) {
-      <mat-option [value]="language.value">{{ language.viewValue }}</mat-option>
+      @for (language of languages; track language.id) {
+      <mat-option [value]="language.id">{{ language.name }}</mat-option>
       }
     </mat-select>
   </mat-form-field>
   <mat-form-field class="field-full-width">
     <mat-label>Categoria</mat-label>
     <mat-select formControlName="category">
-      @for (category of categories; track category.value) {
-      <mat-option [value]="category.value">{{ category.viewValue }}</mat-option>
+      @for (category of categories; track category.id) {
+      <mat-option [value]="category.id">{{ category.name }}</mat-option>
       }
     </mat-select>
   </mat-form-field>

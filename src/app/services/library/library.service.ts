@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import {
   BookForm,
   ResponseBookPagination,
+  ResponseItem,
   ResponseOneBook,
   ResponseSearchBook,
 } from '../../types/book.types';
@@ -46,5 +47,13 @@ export class LibraryService {
 
   updateBook(id: string, data: BookForm) {
     return this.http.patch(`${this.API}/books/${id}`, data);
+  }
+
+  getAllCategory(): Observable<ResponseItem> {
+    return this.http.get<ResponseItem>(`${this.API}/categories/`);
+  }
+
+  getAllLanguages(): Observable<ResponseItem> {
+    return this.http.get<ResponseItem>(`${this.API}/languages/`);
   }
 }

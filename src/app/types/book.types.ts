@@ -1,6 +1,7 @@
 import {
   mockGetBookPagination,
   mockGetOneBook,
+  mockItem,
   mockSearchBook,
 } from '../services/library/library.service.mock';
 
@@ -14,7 +15,7 @@ export type BookForm = {
   publisher: string;
   author: string;
   year: string;
-  language: string; // TODO: could be a entity
+  language: string;
   description: string;
   category: string;
 };
@@ -23,3 +24,4 @@ export type Book = typeof mockGetOneBook.data;
 export type ResponseSearchBook = typeof mockSearchBook.data;
 export type ResponseOneBook = typeof mockGetOneBook;
 export type ResponseBookPagination = typeof mockGetBookPagination;
+export type ResponseItem = typeof mockItem;

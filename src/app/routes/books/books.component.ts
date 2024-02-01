@@ -63,7 +63,8 @@ export class BooksComponent implements OnInit {
     this.libraryService
       .getAllBooks(1, 10)
       .pipe(
-        map((response) => response.data.items as Omit<Book, 'category'>[]),
+        take(1),
+        map((response) => response.data.items as any),
         catchError((err) => {
           this.openDialog({
             title: 'error',
@@ -95,7 +96,7 @@ export class BooksComponent implements OnInit {
       .pipe(
         take(1),
         switchMap(() => this.libraryService.getAllBooks(1, 10)),
-        map((response) => response.data.items as Omit<Book, 'category'>[]),
+        map((response) => response.data.items as any),
         takeUntil(this.ngUnsubscribe),
         catchError((err) => {
           this.openDialog({

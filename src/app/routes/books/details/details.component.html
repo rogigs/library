@@ -2,8 +2,8 @@
   <div class="books-details__wrapper-image--div">
     <img
       class="books-details__wrapper-image--img"
-      src="{{ details.image.src }}"
-      alt="{{ details.image.alt }}"
+      src="{{ details?.image?.src }}"
+      alt="{{ details?.image?.alt }}"
     />
     <button
       mat-stroked-button
@@ -41,32 +41,32 @@
     <mat-list>
       <mat-list-item>
         <span matListItemTitle>Id do livro</span>
-        <span mat-line>{{ details.id }}</span>
+        <span mat-line>{{ details?.id }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Autor:</span>
 
-        <span mat-line>{{ details.author }}</span>
+        <span mat-line>{{ details?.author }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Editora:</span>
-        <span mat-line>{{ details.publisher }}</span>
+        <span mat-line>{{ details?.publisher }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Ano:</span>
-        <span mat-line>{{ details.year }}</span>
+        <span mat-line>{{ details?.year }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Criado por: </span>
-        <span mat-line>{{ details.createdByUser }}</span>
+        <span mat-line>{{ details?.createdByUser?.id }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Atualizado em:</span>
-        <span mat-line>Atualizado em: {{ details.updateDate }}</span>
+        <span mat-line>{{ details?.updateAt || "None" }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Atualizado por:</span>
-        <span mat-line>{{ details.updateByUser }}</span>
+        <span mat-line>{{ details?.updatedByUser || "None" }}</span>
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>Ativo:</span>
