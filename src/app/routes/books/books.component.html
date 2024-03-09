@@ -19,57 +19,7 @@
 <section class="books__card-section">
   @if (books ) { @for (book of books; track book.id) {
   <!-- TODO: build a component card to use deferrable view -->
-  <mat-card class="books__card--card">
-    <mat-card-header>
-      <mat-card-title-group>
-        <img
-          class="books__card--image"
-          mat-card-image
-          src="{{ book.image.src }}"
-          alt="{{ book.image.alt }}"
-        />
-        <mat-card-title>{{ book.name }}</mat-card-title>
-        <mat-card-subtitle
-          >{{ book.author }} - {{ book.publisher }}</mat-card-subtitle
-        >
-      </mat-card-title-group>
-    </mat-card-header>
-
-    <mat-card-content class="books__card--content">
-      {{ book.description }}
-    </mat-card-content>
-    <mat-card-footer>
-      <mat-card-actions class="books__card--card-actions">
-        <button
-          mat-flat-button
-          extended
-          color="accent"
-          (click)="goToForm(book.id)"
-        >
-          <mat-icon>edit</mat-icon>
-          Editar
-        </button>
-        <button
-          mat-flat-button
-          extended
-          color="warn"
-          (click)="deleteBook(book.id)"
-        >
-          <mat-icon>delete</mat-icon>
-          Deletar
-        </button>
-        <button
-          mat-stroked-button
-          extended
-          color="primary"
-          (click)="goToDetails(book.id)"
-        >
-          <mat-icon>visibility</mat-icon>
-          Ver mais
-        </button>
-      </mat-card-actions>
-    </mat-card-footer>
-  </mat-card>
+  <app-card [book]="book" />
   } @empty {
   <p>Nenhum livro foi cadastrado ainda</p>
   } } @else {

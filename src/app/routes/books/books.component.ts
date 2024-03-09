@@ -3,15 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import {
-  Subject,
-  catchError,
-  map,
-  switchMap,
-  take,
-  takeUntil,
-  throwError,
-} from 'rxjs';
+import { Subject, catchError, map, take, takeUntil, throwError } from 'rxjs';
 import {
   DialogComponent,
   DialogData,
@@ -19,11 +11,12 @@ import {
 import { LibraryService } from '../../services/library/library.service';
 import { AppMaterialModule } from '../../shared/app-material.module';
 import { Book } from '../../types/book.types';
+import { CardComponent } from './card/card.component';
 
 @Component({
   selector: 'app-books',
   standalone: true,
-  imports: [AppMaterialModule, AsyncPipe, ReactiveFormsModule],
+  imports: [AppMaterialModule, AsyncPipe, ReactiveFormsModule, CardComponent],
   templateUrl: './books.component.html',
   styleUrl: './books.component.scss',
   providers: [LibraryService],
@@ -51,6 +44,12 @@ export class BooksComponent implements OnInit {
     this.ngUnsubscribe.complete();
   }
 
+  goToForm(id?: string): void {
+    this.router.navigate(['/books/form'], {
+      queryParams: id ? { id } : {},
+    });
+  }
+
   openDialog(data: DialogData): void {
     this.dialog.open(DialogComponent, {
       data,
@@ -72,38 +71,6 @@ export class BooksComponent implements OnInit {
           return throwError(() => err);
         }),
         takeUntil(this.ngUnsubscribe)
-      )
-      .subscribe((res) => {
-        this.books = res;
-      });
-  }
-
-  goToForm(id?: string): void {
-    this.router.navigate(['/books/form'], {
-      queryParams: id ? { id } : {},
-    });
-  }
-
-  goToDetails(id: string): void {
-    this.router.navigate([`/books/details/${id}`]);
-  }
-
-  deleteBook(id: string): void {
-    this.libraryService
-      .deleteBook(id)
-      .pipe(
-        take(1),
-        switchMap(() => this.libraryService.getAllBooks(1, 10)),
-        map((response) => response.data.items as any),
-        takeUntil(this.ngUnsubscribe),
-        catchError((err) => {
-          this.openDialog({
-            title: 'error',
-            content: 'Por favor, tente novamente.',
-          });
-
-          return throwError(() => err);
-        })
       )
       .subscribe((res) => {
         this.books = res;

@@ -1,0 +1,39 @@
+@import "../../../../assets/scss/breakpoints";
+
+@media screen and (max-width: $breakpoint-sm) {
+  .books__card--card-actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .mdc-button {
+      width: 100%;
+    }
+  }
+}
+
+.books__card--card {
+  height: 100%;
+  width: 100%;
+}
+
+.books__card--image {
+  background-size: cover;
+  height: 150px;
+  width: 150px;
+}
+
+.books__card--content {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  margin-top: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.books__card--card-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
