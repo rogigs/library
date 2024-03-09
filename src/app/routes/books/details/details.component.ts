@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, catchError, map, take, takeUntil, throwError } from 'rxjs';
@@ -10,7 +10,6 @@ import {
 import { LibraryService } from '../../../services/library/library.service';
 import { AppMaterialModule } from '../../../shared/app-material.module';
 import { Book } from '../../../types/book.types';
-
 @Component({
   selector: 'app-details',
   standalone: true,
@@ -19,16 +18,14 @@ import { Book } from '../../../types/book.types';
   styleUrl: './details.component.scss',
 })
 export class DetailsComponent implements OnInit {
+  private location = inject(Location);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private libraryService = inject(LibraryService);
+  public dialog = inject(MatDialog);
   private ngUnsubscribe = new Subject<void>();
-  details!: Book;
 
-  constructor(
-    private location: Location,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private libraryService: LibraryService,
-    public dialog: MatDialog
-  ) {}
+  details!: Book;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {

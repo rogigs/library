@@ -1,5 +1,5 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -31,6 +31,10 @@ type Select = {
   providers: [LibraryService],
 })
 export class FormComponent {
+  private location = inject(Location);
+  private libraryService = inject(LibraryService);
+  private activatedRoute = inject(ActivatedRoute);
+  public dialog = inject(MatDialog);
   private ngUnsubscribe = new Subject<void>();
 
   idBook: string | null = null;
@@ -54,13 +58,6 @@ export class FormComponent {
   });
   languages!: Select[];
   categories!: Select[];
-
-  constructor(
-    private location: Location,
-    private libraryService: LibraryService,
-    private activatedRoute: ActivatedRoute,
-    public dialog: MatDialog
-  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {

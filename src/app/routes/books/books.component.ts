@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -34,15 +34,13 @@ export class BooksComponent implements OnInit {
   // cache memory of books
   // visible books books.slice(pageSize * page, pageSize * page + pageSize )
 
+  private router = inject(Router);
+  private libraryService = inject(LibraryService);
+  private dialog = inject(MatDialog);
   private ngUnsubscribe = new Subject<void>();
+
   books!: Omit<Book, 'category'>[];
   name: string = '';
-
-  constructor(
-    private router: Router,
-    private libraryService: LibraryService,
-    public dialog: MatDialog
-  ) {}
 
   ngOnInit(): void {
     this.loadBooks();
