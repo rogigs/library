@@ -6,8 +6,6 @@ import { environment } from '../../environments/environment.development';
 export class AuthService {
   private token: string | null = null;
 
-  constructor() {}
-
   setToken(token: string) {
     this.token = token;
   }

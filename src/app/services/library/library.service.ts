@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
+  Book,
   BookForm,
-  ResponseBookPagination,
-  ResponseItem,
-  ResponseOneBook,
-  ResponseSearchBook,
+  BookItem,
+  BookPagination,
+  BookSearch,
 } from '../../types/book.types';
+import { Response, ResponsePagination } from '../../types/response.types';
 
 @Injectable({
   providedIn: 'root',
@@ -17,12 +18,12 @@ export class LibraryService {
 
   constructor(private http: HttpClient) {}
 
-  insertBook(data: BookForm): Observable<ResponseOneBook> {
-    return this.http.post<ResponseOneBook>(`${this.API}/books`, data);
+  insertBook(data: BookForm): Observable<Book> {
+    return this.http.post<Book>(`${this.API}/books`, data);
   }
 
-  searchBook(name: string): Observable<ResponseSearchBook> {
-    return this.http.get<ResponseSearchBook>(
+  searchBook(name: string): Observable<Response<BookSearch>> {
+    return this.http.get<Response<BookSearch>>(
       `${this.API}/books/search?name=${name}`
     );
   }
@@ -30,17 +31,16 @@ export class LibraryService {
   getAllBooks(
     page: number,
     pageSize: number
-  ): Observable<ResponseBookPagination> {
-    return this.http.get<ResponseBookPagination>(
+  ): Observable<ResponsePagination<BookPagination>> {
+    return this.http.get<ResponsePagination<BookPagination>>(
       `${this.API}/books/pagination?page=${page}&pageSize=${pageSize}`
     );
   }
 
-  getOneBook(id: string): Observable<ResponseOneBook> {
-    return this.http.get<ResponseOneBook>(`${this.API}/books/find/${id}`);
+  getOneBook(id: string): Observable<Response<Book>> {
+    return this.http.get<Response<Book>>(`${this.API}/books/find/${id}`);
   }
 
-  // TODO: add types response when change value of body in server
   deleteBook(id: string) {
     return this.http.patch(`${this.API}/books/${id}/delete`, {});
   }
@@ -49,11 +49,11 @@ export class LibraryService {
     return this.http.patch(`${this.API}/books/${id}`, data);
   }
 
-  getAllCategory(): Observable<ResponseItem> {
-    return this.http.get<ResponseItem>(`${this.API}/categories/`);
+  getAllCategory(): Observable<Response<BookItem>> {
+    return this.http.get<Response<BookItem>>(`${this.API}/categories/`);
   }
 
-  getAllLanguages(): Observable<ResponseItem> {
-    return this.http.get<ResponseItem>(`${this.API}/languages/`);
+  getAllLanguages(): Observable<Response<BookItem>> {
+    return this.http.get<Response<BookItem>>(`${this.API}/languages/`);
   }
 }
