@@ -17,7 +17,7 @@
   </button>
 </header>
 <section class="books__card-section">
-  @if (books ) { @for (book of books; track book.id) {
+  @if (books$ ) { @for (book of books$ | async; track book.id) {
   <!-- TODO: build a component card to use deferrable view -->
   <app-card [book]="book" />
   } @empty {
