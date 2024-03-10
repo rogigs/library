@@ -50,16 +50,6 @@ export class CardComponent {
     });
   }
 
-  goToForm(id?: string): void {
-    this.router.navigate(['/books/form'], {
-      queryParams: id ? { id } : {},
-    });
-  }
-
-  goToDetails(id: string): void {
-    this.router.navigate([`/books/details/${id}`]);
-  }
-
   deleteBook(id: string): void {
     this.libraryService
       .deleteBook(id)

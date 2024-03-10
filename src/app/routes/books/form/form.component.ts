@@ -1,4 +1,4 @@
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
@@ -15,6 +15,7 @@ import {
   DialogData,
 } from '../../../components/dialog/dialog.component';
 import { LibraryService } from '../../../services/library/library.service';
+import { NavigateService } from '../../../services/navigate/navigate.service';
 import { AppMaterialModule } from '../../../shared/app-material.module';
 import { Book, BookForm } from '../../../types/book.types';
 
@@ -31,11 +32,12 @@ type Select = {
   providers: [LibraryService],
 })
 export class FormComponent {
-  private location = inject(Location);
   private libraryService = inject(LibraryService);
   private activatedRoute = inject(ActivatedRoute);
   public dialog = inject(MatDialog);
   private ngUnsubscribe = new Subject<void>();
+
+  navigate = inject(NavigateService);
 
   idBook: string | null = null;
   bookForm = new FormGroup({
@@ -157,10 +159,6 @@ export class FormComponent {
     this.dialog.open(DialogComponent, {
       data,
     });
-  }
-
-  goBackToPrevPage(): void {
-    this.location.back();
   }
 
   onValidate(): boolean {

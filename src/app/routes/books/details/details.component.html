@@ -9,7 +9,7 @@
       mat-stroked-button
       extended
       color="primary"
-      (click)="goBackToPrevPage()"
+      (click)="navigate.goToPrevPage()"
     >
       <mat-icon>arrow_back</mat-icon>
       Voltar
@@ -18,7 +18,7 @@
       mat-flat-button
       extended
       color="accent"
-      (click)="goToForm(details.id)"
+      (click)="navigate.goToForm(details.id)"
     >
       <mat-icon>edit</mat-icon>
       Editar

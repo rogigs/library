@@ -1,13 +1,13 @@
-import { Location } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Inject, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subject, catchError, map, take, takeUntil, throwError } from 'rxjs';
 import {
   DialogComponent,
   DialogData,
 } from '../../../components/dialog/dialog.component';
 import { LibraryService } from '../../../services/library/library.service';
+import { NavigateService } from '../../../services/navigate/navigate.service';
 import { AppMaterialModule } from '../../../shared/app-material.module';
 import { Book } from '../../../types/book.types';
 @Component({
@@ -18,8 +18,7 @@ import { Book } from '../../../types/book.types';
   styleUrl: './details.component.scss',
 })
 export class DetailsComponent implements OnInit {
-  private location = inject(Location);
-  private router = inject(Router);
+  navigate = Inject(NavigateService);
   private activatedRoute = inject(ActivatedRoute);
   private libraryService = inject(LibraryService);
   public dialog = inject(MatDialog);
@@ -58,16 +57,6 @@ export class DetailsComponent implements OnInit {
   openDialog(data: DialogData): void {
     this.dialog.open(DialogComponent, {
       data,
-    });
-  }
-
-  goBackToPrevPage(): void {
-    this.location.back();
-  }
-
-  goToForm(id: string): void {
-    this.router.navigate(['/books/form'], {
-      queryParams: { id },
     });
   }
 
