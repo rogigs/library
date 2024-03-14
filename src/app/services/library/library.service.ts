@@ -22,8 +22,8 @@ export class LibraryService {
     return this.http.post<Book>(`${this.API}/books`, data);
   }
 
-  searchBook(name: string): Observable<Response<BookSearch>> {
-    return this.http.get<Response<BookSearch>>(
+  searchBook(name: string): Observable<Response<BookSearch[]>> {
+    return this.http.get<Response<BookSearch[]>>(
       `${this.API}/books/search?name=${name}`
     );
   }

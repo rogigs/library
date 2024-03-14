@@ -29,7 +29,7 @@ type Select = {
   imports: [AppMaterialModule, CommonModule, ReactiveFormsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
-  providers: [LibraryService],
+  providers: [LibraryService, NavigateService],
 })
 export class FormComponent {
   private libraryService = inject(LibraryService);

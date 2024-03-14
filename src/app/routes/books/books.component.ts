@@ -10,6 +10,7 @@ import {
   DialogData,
 } from '../../components/dialog/dialog.component';
 import { LibraryService } from '../../services/library/library.service';
+import { NavigateService } from '../../services/navigate/navigate.service';
 import { AppMaterialModule } from '../../shared/app-material.module';
 import { bookActions } from '../../store/actions/book.action';
 import { bookSelector } from '../../store/selectors/book.selector';
@@ -33,6 +34,7 @@ export class BooksComponent implements OnInit {
   private libraryService = inject(LibraryService);
   private dialog = inject(MatDialog);
   private ngUnsubscribe = new Subject<void>();
+  navigate = inject(NavigateService);
 
   store = inject(Store);
   books$ = this.store.select(bookSelector);
@@ -45,12 +47,6 @@ export class BooksComponent implements OnInit {
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-  }
-
-  goToForm(id?: string): void {
-    this.router.navigate(['/books/form'], {
-      queryParams: id ? { id } : {},
-    });
   }
 
   openDialog(data: DialogData): void {

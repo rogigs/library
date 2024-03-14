@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, catchError, map, take, takeUntil, throwError } from 'rxjs';
@@ -18,7 +18,7 @@ import { Book } from '../../../types/book.types';
   styleUrl: './details.component.scss',
 })
 export class DetailsComponent implements OnInit {
-  navigate = Inject(NavigateService);
+  navigate = inject(NavigateService);
   private activatedRoute = inject(ActivatedRoute);
   private libraryService = inject(LibraryService);
   public dialog = inject(MatDialog);

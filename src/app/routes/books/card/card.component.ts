@@ -5,7 +5,6 @@ import {
   inject,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import {
   Subject,
   catchError,
@@ -20,6 +19,7 @@ import {
   DialogData,
 } from '../../../components/dialog/dialog.component';
 import { LibraryService } from '../../../services/library/library.service';
+import { NavigateService } from '../../../services/navigate/navigate.service';
 import { AppMaterialModule } from '../../../shared/app-material.module';
 import { Book } from '../../../types/book.types';
 
@@ -32,10 +32,10 @@ import { Book } from '../../../types/book.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent {
-  private router = inject(Router);
   private dialog = inject(MatDialog);
   private libraryService = inject(LibraryService);
   private ngUnsubscribe = new Subject<void>();
+  navigate = inject(NavigateService);
 
   @Input({ required: true }) book!: Omit<Book, 'category'>;
 

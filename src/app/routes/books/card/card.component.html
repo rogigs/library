@@ -23,7 +23,7 @@
         mat-flat-button
         extended
         color="accent"
-        (click)="goToForm(book.id)"
+        (click)="navigate.goToDetails(book.id)"
       >
         <mat-icon>edit</mat-icon>
         Editar
@@ -41,7 +41,7 @@
         mat-stroked-button
         extended
         color="primary"
-        (click)="goToDetails(book.id)"
+        (click)="navigate.goToDetails(book.id)"
       >
         <mat-icon>visibility</mat-icon>
         Ver mais
