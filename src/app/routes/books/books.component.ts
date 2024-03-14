@@ -1,16 +1,14 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { Subject, exhaustMap, filter } from 'rxjs';
 import {
   DialogComponent,
   DialogData,
 } from '../../components/dialog/dialog.component';
 import { LibraryService } from '../../services/library/library.service';
-import { NavigateService } from '../../services/navigate/navigate.service';
 import { AppMaterialModule } from '../../shared/app-material.module';
 import { bookActions } from '../../store/actions/book.action';
 import { bookSelector } from '../../store/selectors/book.selector';
@@ -30,18 +28,27 @@ export class BooksComponent implements OnInit {
   // cache memory of books
   // visible books books.slice(pageSize * page, pageSize * page + pageSize )
 
-  private router = inject(Router);
-  private libraryService = inject(LibraryService);
   private dialog = inject(MatDialog);
+  private libraryService = inject(LibraryService);
   private ngUnsubscribe = new Subject<void>();
-  navigate = inject(NavigateService);
 
   store = inject(Store);
   books$ = this.store.select(bookSelector);
-  name: string = '';
+  search = new FormControl('');
 
   ngOnInit(): void {
     this.store.dispatch(bookActions.getBooks());
+  }
+
+  constructor() {
+    this.search.valueChanges
+      .pipe(
+        filter((value) => !!value),
+        exhaustMap((value) => this.libraryService.searchBook(value as string))
+      )
+      .subscribe((response) => {
+        this.store.dispatch(bookActions.searchBooks(response));
+      });
   }
 
   ngOnDestroy(): void {
@@ -54,6 +61,4 @@ export class BooksComponent implements OnInit {
       data,
     });
   }
-
-  searchBook(): void {}
 }

@@ -11,9 +11,14 @@ const initialState: BookState = {
 export const BookReducer = createReducer(
   initialState,
   on(bookActions.getBooks, (state) => ({ ...state, status: Status.loading })),
-  on(bookActions.getBooksSuccess, (state, books) => ({
+  on(bookActions.getBooksSuccess, (state, props) => ({
     ...state,
-    data: books.data.items as any,
+    data: props.data.items as any,
+    status: Status.success,
+  })),
+  on(bookActions.searchBooks, (state, props) => ({
+    ...state,
+    data: props.data as any,
     status: Status.success,
   }))
 );

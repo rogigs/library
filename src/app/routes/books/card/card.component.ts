@@ -30,6 +30,7 @@ import { Book } from '../../../types/book.types';
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [LibraryService, NavigateService],
 })
 export class CardComponent {
   private dialog = inject(MatDialog);

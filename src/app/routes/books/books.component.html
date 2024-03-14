@@ -1,22 +1,13 @@
 <header class="books__header--form">
-  <form (ngSubmit)="searchBook()">
-    <mat-form-field appearance="fill" (keyup.enter)="searchBook()">
+  <form>
+    <mat-form-field appearance="fill">
       <mat-label>Procurar livro...</mat-label>
-      <input
-        matInput
-        [(ngModel)]="name"
-        [ngModelOptions]="{ standalone: true }"
-      />
+      <input matInput type="search" [formControl]="search" />
       <mat-icon matSuffix>search</mat-icon>
       <mat-hint>Pressione enter para procurar</mat-hint>
     </mat-form-field>
   </form>
-  <button
-    mat-flat-button
-    extended
-    color="primary"
-    (click)="navigate.goToForm()"
-  >
+  <button mat-flat-button extended color="primary">
     <mat-icon>add</mat-icon>
     Adicionar
   </button>
@@ -24,7 +15,7 @@
 <section class="books__card-section">
   @if (books$ ) { @for (book of books$ | async; track book.id) {
   <!-- TODO: build a component card to use deferrable view -->
-  <app-card [book]="book" />
+  <!-- <app-card [book]="book" /> -->
   } @empty {
   <p>Nenhum livro foi cadastrado ainda</p>
   } } @else {

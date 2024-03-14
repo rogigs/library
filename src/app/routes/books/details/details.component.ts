@@ -16,6 +16,7 @@ import { Book } from '../../../types/book.types';
   imports: [AppMaterialModule],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
+  providers: [LibraryService, NavigateService],
 })
 export class DetailsComponent implements OnInit {
   navigate = inject(NavigateService);
